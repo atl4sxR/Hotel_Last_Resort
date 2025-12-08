@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Last Resort Hotel</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* BASE STYLES */
+body {
+    margin: 0;
+    background-color: #FAFAF7;
+    color: #1A2A3A;
+    font-family: "Inter", sans-serif;
+}
+
+h1, h2 {
+    font-family: "Instrument Serif", serif;
+}
+
+/* MENU */
+.menu-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.menu-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+/* MENU */
+#side-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(26,42,58,0.95);
+    color: #E8DCC2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    transition: right 0.4s ease;
+    z-index: 999;
+}
+
+#side-menu.open {
+    right: 0;
+}
+
+#side-menu a {
+    color: #E8DCC2;
+    font-size: 2rem;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-family: "Instrument Serif", serif;
+}
+
+#side-menu a:hover {
+    color: #C49A6C;
+}
+
+#side-menu .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #E8DCC2;
+}
+
+/* GALLERY HEADER */
+.gallery-header {
+    text-align: center;
+    padding: 120px 20px 60px;
+}
+
+.gallery-header h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.gallery-header p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+/* NAVIGATION TABS */
+.gallery-nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding-bottom: 30px;
+}
+
+.gallery-nav a {
+    text-decoration: none;
+    font-weight: 600;
+    color: #1A2A3A;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: 0.3s ease;
+}
+
+.gallery-nav a:hover {
+    background-color: #1A2A3A;
+    color: #FAFAF7;
+}
+
+/* SECTIONS */
+.gallery-section {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.gallery-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+/* IMAGE GRID */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    border-radius: 12px;
+    cursor: pointer;
+    object-fit: cover;
+    height: 220px;
+    background: #EDEDE9;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(26, 42, 58, 0.25);
+}
+
+/* LIGHTBOX */
+#lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(26,42,58,0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+}
+
+#lightbox img {
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENU ICON -->
+<div class="menu-icon" id="menuIcon" onclick="toggleMenu()">
+    <img src="/images/menu.png" alt="Menu">
+</div>
+
+<!-- SLIDE-IN MENU-->
+<div id="side-menu">
+    <div class="close-btn" onclick="toggleMenu()">✕</div>
+    <a href="index.html">Home</a>
+    <a href="amenities.html">Amenities</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+</div>
+
+<!-- GALLERY HEADER -->
+<header class="gallery-header">
+    <h1>Gallery</h1>
+    <p>Explore the spaces and experiences of Last Resort Hotel.</p>
+</header>
+
+<!-- GALLERY NAVIGATION -->
+<nav class="gallery-nav">
+    <a href="#amenities">Amenities</a>
+    <a href="#rooms">Rooms</a>
+    <a href="#nature">Nature</a>
+    <a href="#events">Events</a>
+</nav>
+
+<!-- GALLERY SECTIONS -->
+<section id="amenities" class="gallery-section">
+    <h2>Amenities</h2>
+    <div class="gallery-grid">
+        <img src="images/gallery/amenities1.jpg">
+        <img src="images/gallery/amenities2.jpg">
+        <img src="images/gallery/amenities3.jpg">
+        <img src="images/gallery/amenities4.jpg">
+    </div>
+</section>
+
+<section id="rooms" class="gallery-section">
+    <h2>Rooms & Suites</h2>
+    <div class="gallery-grid">
+        <img src="images/gallery/hotel1.jpg">
+        <img src="images/gallery/hotel2.jpg">
+        <img src="images/gallery/hotel3.jpg">
+        <img src="images/gallery/hotel4.jpg">
+    </div>
+</section>
+
+<section id="nature" class="gallery-section">
+    <h2>Nature & Grounds</h2>
+    <div class="gallery-grid">
+        <img src="images/gallery/grounds1.jpg">
+        <img src="images/gallery/grounds2.jpg">
+        <img src="images/gallery/grounds3.jpg">
+        <img src="images/gallery/grounds4.jpg">
+    </div>
+</section>
+
+<section id="events" class="gallery-section">
+    <h2>Events & Celebrations</h2>
+    <div class="gallery-grid">
+        <img src="images/gallery/event1.jpg">
+        <img src="images/gallery/event2.jpg">
+        <img src="images/gallery/event3.jpg">
+        <img src="images/gallery/event4.jpg">
+    </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="">
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+// Toggle Slide Menu
+function toggleMenu() {
+    const menu = document.getElementById("side-menu");
+    const icon = document.getElementById("menuIcon");
+
+    menu.classList.toggle("open");
+
+    // Hide menu icon while open
+    icon.style.opacity = menu.classList.contains("open") ? "0" : "1";
+}
+
+// Lightbox
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+
+document.querySelectorAll(".gallery-grid img").forEach(img => {
+    img.addEventListener("click", () => {
+        lightbox.style.display = "flex";
+        lightboxImg.src = img.src;
+    });
+});
+
+function closeLightbox() {
+    lightbox.style.display = "none";
+}
+</script>
+
+</body>
+</html>

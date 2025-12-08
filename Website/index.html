@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Last Resort Hotel</title>
+<style>
+/* import heading font */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+body, html {
+    margin:0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #FAFAF7; /* light page background */
+    color: #1A2A3A; /* default text color */
+}
+
+/* Floating menu icon */
+.menu-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.menu-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+/* Full-screen slide-in menu */
+#side-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(26,42,58,0.95); /* dark overlay */
+    color: #E8DCC2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    transition: right 0.4s ease;
+    z-index: 999;
+}
+
+#side-menu a {
+    color: #E8DCC2;
+    font-size: 2rem;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-family: "Instrument Serif", serif;
+}
+
+#side-menu a:hover {
+    color: #C49A6C;
+}
+
+#side-menu .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+#side-menu.open {
+    right: 0;
+}
+
+/* Header video */
+header.video-header{
+    position: relative;
+    width:100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+header.video-header video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 1;
+}
+
+header.video-header .header-content {
+    position: relative;
+    z-index: 2;
+    color: #FAFAF7;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 20px;
+}
+
+header.video-header::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(26,42,58,0.5); /* overlay for text readability */
+    z-index: 1;
+}
+
+p {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h1 {
+    font-size: 58px;
+    color: white;
+}
+
+/* Feature Rows (#index-2) */
+#index-2 {
+    background-color: #FAFAF7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+#index-2 .intro {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #1A2A3A;
+}
+
+/* Feature row styling */
+.feature-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 60px 20px;
+    flex-wrap: wrap;
+}
+
+.feature-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.feature-media {
+    flex: 1 1 500px;
+    max-width: 500px;
+}
+
+.feature-media video {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.feature-text {
+    flex: 1 1 400px;
+    max-width: 500px;
+    color: #1A2A3A;
+}
+
+.feature-text h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #1A2A3A;
+}
+
+.feature-text p {
+    font-size: 1rem;
+    line-height: 1.6rem;
+}
+
+/* Responsive adjustments for feature rows */
+@media (max-width: 900px) {
+    .feature-row {
+        flex-direction: column;
+        text-align: center;
+    }
+    .feature-row.reverse {
+        flex-direction: column;
+    }
+    .feature-media, .feature-text {
+        max-width: 100%;
+    }
+}
+
+/* Accommodations section */
+#accommodations {
+    position: relative;
+    background-color: #1A2A3A;
+    color: #E8DCC2;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+#accommodations .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #E8DCC2;
+}
+
+.rooms-carousel {
+    position: relative;
+    max-width: 900px;
+    margin: auto;
+    height: 400px;
+    overflow: hidden;
+}
+
+.room-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.room-slide.active {
+    opacity: 1;
+}
+
+.room-info {
+    background: rgba(26,42,58,0.7);
+    padding: 20px 30px;
+    max-width: 80%;
+    margin-bottom: 30px;
+    color: #E8DCC2;
+}
+
+.room-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.8rem;
+}
+
+.room-info p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+
+/* Rooms carousel buttons */
+.rooms-carousel .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(196,154,108,0.5);
+    border: none;
+    font-size: 2rem;
+    color: #FAFAF7;
+    padding: 10px 15px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.rooms-carousel .carousel-btn.left { left: 10px; }
+.rooms-carousel .carousel-btn.right { right: 10px; }
+
+.rooms-carousel .carousel-btn:hover {
+    background: rgba(196,154,108,0.8);
+}
+
+/* Dots navigation */
+.carousel-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 3;
+}
+
+.carousel-dots .dot {
+    width: 12px;
+    height: 12px;
+    background: rgba(232,220,194,0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.carousel-dots .dot.active {
+    background: #C49A6C;
+}
+
+/* Reviews section */
+#reviews-section {
+    background-color: #FAFAF7;
+    padding: 60px 20px;
+    color: #1A2A3A;
+    text-align: center;
+}
+
+.reviews-title {
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+.reviews-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.reviews-track {
+    display: flex;
+    transition: transform 0.5s ease;
+    width: 100%;
+}
+
+.review-card {
+    flex: 0 0 100%;
+    background: #A7C4D8;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    color: #1A2A3A;
+}
+
+.review-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 3px solid #E8DCC2;
+}
+
+.review-card h3 {
+    margin: 10px 0;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+
+.review-card p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    opacity: 0.9;
+    max-width: 600px;
+    justify-content: center;
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(196,154,108,0.5);
+    border: none;
+    color: #FAFAF7;
+    font-size: 2rem;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 2;
+    transition: background 0.3s;
+}
+
+.carousel-btn:hover {
+    background: rgba(196,154,108,0.8);
+}
+
+.carousel-btn.left { left: 10px; }
+.carousel-btn.right { right: 10px; }
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .review-card { padding: 30px 15px; }
+    .review-img { width: 70px; height: 70px; }
+    .room-slide { height: 250px; }
+    .room-info h3 { font-size: 1.4rem; }
+    .room-info p { font-size: 0.9rem; }
+}
+
+/* CTA Section */
+#cta-booking {
+    background: url('images/ctaBackground.jpg') center/cover no-repeat;
+    color: #FAFAF7;
+    text-align: center;
+    padding: 80px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+#cta-booking::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(26,42,58,0.5);
+    z-index: 0;
+}
+
+#cta-booking .cta-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: auto;
+}
+
+#cta-booking h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+#cta-booking p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    line-height: 1.6rem;
+}
+
+#cta-booking .cta-button {
+    background-color: #C49A6C;
+    color: #FAFAF7;
+    text-decoration: none;
+    padding: 18px 40px;
+    font-size: 1.3rem;
+    transition: background 0.3s, transform 0.3s;
+}
+
+#cta-booking .cta-button:hover {
+    background-color: #A7C4D8;
+    transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+    #cta-booking h2 {
+        font-size: 2rem;
+    }
+    #cta-booking p {
+        font-size: 1rem;
+    }
+    #cta-booking .cta-button {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Instrument Serif", serif;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Floating menu icon -->
+<div class="menu-icon" id="menuIcon" onclick="toggleMenu(true)">
+    <img src="/images/menu.png" alt="Menu">
+</div>
+
+<!-- Full-screen menu -->
+<div id="side-menu">
+    <div class="close-btn" onclick="toggleMenu(false)">✕</div>
+    <a href="index.html">Home</a>
+    <a href="amenities.html">Amenities</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="about.html">About</a>
+    <a href="login.html">Make a Reservation</a>
+</div>
+
+<header class="video-header">
+<video autoplay muted loop playsinline>
+  <source src="images/index/indexMain.mp4" type="video/mp4">
+</video>
+
+<div class="header-content">
+  <img src="images/lrhNoTextWhite.png" alt="Last Resort Hotel logo" height="150" width="185">
+  <h1> Welcome to Last Resort Hotels</h1>
+</div>
+</header>
+
+<!-- Index-2 Section with Alternating Feature Rows -->
+<div id="index-2">
+    <div class="intro">
+        <h1 style="color: black;">
+            Escape to your island-side paradise <br>
+            where dreams come to life and <br>
+            surprises await at every turn
+        </h1>
+    </div>
+
+    <div class="feature-row">
+        <div class="feature-media">
+            <video autoplay muted loop playsinline>
+                <source src="images/index/lrhGym2.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="feature-text">
+            <h2>World Class Amenities</h2>
+            <p>Our world-class amenities are designed to elevate your stay. Stay active in our state-of-the-art gym, rejuvenate in the luxurious spa, or unwind by our sparkling pools. From fitness to relaxation, every detail is crafted for your comfort and indulgence.</p>
+        </div>
+    </div>
+
+    <div class="feature-row reverse">
+        <div class="feature-media">
+            <video autoplay muted loop playsinline>
+                <source src="images/index/lrhDinner.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="feature-text">
+            <h2>Michelin Dining Experience</h2>
+            <p>Savor an extraordinary culinary journey at our Michelin-starred restaurant. From artfully crafted dishes to locally sourced ingredients, every meal is a masterpiece. Enjoy world-class flavors, impeccable service, and an unforgettable dining experience that delights all your senses.</p>
+        </div>
+    </div>
+
+    <div class="feature-row">
+        <div class="feature-media">
+            <video autoplay muted loop playsinline>
+                <source src="images/index/lrhBeach2.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="feature-text">
+            <h2>Adventures & Escapes</h2>
+            <p>Discover the best of island living with unforgettable experiences at Last Resort Hotel. Hike through lush trails, soak up the sun on pristine beaches, explore hidden coves, or unwind with curated wellness activities. Adventure, relaxation, and magic await at every turn.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Accommodations Section -->
+<section id="accommodations">
+    <h2 class="section-title">Accommodations</h2>
+    <div class="rooms-carousel">
+        <div class="room-slide" style="background-image: url('images/index/room1.jpg')">
+            <div class="room-info">
+                <h3>Ocean View Suite</h3>
+                <p>Wake up to panoramic ocean views in our luxurious suite, featuring a king-sized bed, private balcony, and personalized concierge service.</p>
+            </div>
+        </div>
+
+        <div class="room-slide" style="background-image: url('images/index/room2.jpg')">
+            <div class="room-info">
+                <h3>Garden Villa</h3>
+                <p>Secluded in lush gardens, this villa offers the ultimate retreat with a private pool, spa bath, and exquisite interior design.</p>
+            </div>
+        </div>
+
+        <div class="room-slide" style="background-image: url('images/index/room3.jpg')">
+            <div class="room-info">
+                <h3>Deluxe King Room</h3>
+                <p>Perfect for couples, this elegant room features plush bedding, modern amenities, and easy access to all hotel facilities.</p>
+            </div>
+        </div>
+
+        <!-- Carousel Buttons -->
+        <button class="carousel-btn left" onclick="moveRoomSlide(-1)">❮</button>
+        <button class="carousel-btn right" onclick="moveRoomSlide(1)">❯</button>
+
+        <!-- Dots Navigation -->
+        <div class="carousel-dots">
+            <span class="dot" onclick="goToRoomSlide(0)"></span>
+            <span class="dot" onclick="goToRoomSlide(1)"></span>
+            <span class="dot" onclick="goToRoomSlide(2)"></span>
+        </div>
+    </div>
+</section>
+
+<!-- Call-to-Action Section -->
+<section id="cta-booking">
+    <div class="cta-content">
+        <h2>Ready for Your Island Escape?</h2>
+        <p>Book your stay at Last Resort Hotel today and experience luxury, adventure, and relaxation like never before.</p>
+        <a href="booking.html" class="cta-button">Book Now</a>
+    </div>
+</section>
+
+
+<!-- Reviews Section -->
+<section id="reviews-section">
+<h2 class="reviews-title">What Our Guests Are Saying</h2>
+
+<div class="reviews-carousel">
+    <button class="carousel-btn left" onclick="moveSlide(-1)">❮</button>
+    <div class="reviews-track">
+        <div class="review-card">
+            <img src="images/index/customer1.jpg" class="review-img">
+            <h3>John S.</h3>
+            <p>"The most incredible stay I've ever had. From the moment we arrived, the staff made us feel like royalty. The views were breathtaking, the rooms impeccably clean, and the food was absolutely divine. I cannot recommend this hotel enough for anyone looking for a truly relaxing getaway."</p>
+        </div>
+        <div class="review-card">
+            <img src="images/index/customer2.jpg" class="review-img">
+            <h3>Elaine Y.</h3>
+            <p>"Everything about our stay exceeded expectations. The attention to detail was remarkable—from the cozy room decor to the personalized service. We spent hours by the pool and enjoyed serene sunsets that made this trip unforgettable. Truly a five-star experience."</p>
+        </div>
+        <div class="review-card">
+            <img src="images/index/customer3.jpg" class="review-img">
+            <h3>Felix K.</h3>
+            <p>"A perfect relaxing getaway. Every staff member was warm and welcoming, and the hotel amenities were top-notch. We loved the spa treatments and the private beach access. This hotel is a little slice of paradise and we can’t wait to return."</p>
+        </div>
+        <div class="review-card">
+            <img src="images/index/customer4.jpg" class="review-img">
+            <h3>Jax T.</h3>
+            <p>"Our family vacation at Last Resort Hotel was unforgettable. The kids enjoyed the activities and the adults loved the tranquility and luxury. Every meal was exquisite, and the attention to our needs made us feel completely cared for. Highly recommended for families and couples alike."</p>
+        </div>
+    </div>
+    <button class="carousel-btn right" onclick="moveSlide(1)">❯</button>
+</div>
+</section>
+
+<script>
+function toggleMenu(open) {
+    const menu = document.getElementById('side-menu');
+    const icon = document.getElementById('menuIcon');
+    if(open) {
+        menu.classList.add('open');
+        icon.style.display = 'none';
+    } else {
+        menu.classList.remove('open');
+        icon.style.display = 'block';
+    }
+}
+
+// Reviews carousel
+let slideIndex = 0;
+function moveSlide(direction) {
+    const track = document.querySelector('.reviews-track');
+    const totalSlides = document.querySelectorAll('.review-card').length;
+    slideIndex += direction;
+    if (slideIndex < 0) slideIndex = totalSlides - 1;
+    if (slideIndex >= totalSlides) slideIndex = 0;
+    track.style.transform = `translateX(-${slideIndex * 100}%)`;
+}
+setInterval(() => moveSlide(1), 5000);
+
+// Accommodations carousel - fade effect
+let roomIndex = 0;
+const slides = document.querySelectorAll('.room-slide');
+const dots = document.querySelectorAll('.carousel-dots .dot');
+
+function showRoomSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        dots[i].classList.toggle('active', i === index);
+    });
+    roomIndex = index;
+}
+
+// Manual buttons
+function moveRoomSlide(direction) {
+    roomIndex += direction;
+    if (roomIndex < 0) roomIndex = slides.length - 1;
+    if (roomIndex >= slides.length) roomIndex = 0;
+    showRoomSlide(roomIndex);
+}
+
+// Dots click
+dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+        showRoomSlide(i);
+        resetRoomInterval();
+    });
+});
+
+// Auto rotation
+let roomInterval = setInterval(() => {
+    moveRoomSlide(1);
+}, 5000);
+
+function resetRoomInterval() {
+    clearInterval(roomInterval);
+    roomInterval = setInterval(() => {
+        moveRoomSlide(1);
+    }, 5000);
+}
+
+// Initialize
+showRoomSlide(0);
+
+</script>
+
+</body>
+</html>

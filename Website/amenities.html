@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amenities | Last Resort Hotel</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* BASE STYLES */
+body {
+    margin: 0;
+    background-color: #FAFAF7;
+    color: #1A2A3A;
+    font-family: "Inter", sans-serif;
+}
+
+h1, h2, h3 {
+    font-family: "Instrument Serif", serif;
+    justify-content: center;
+}
+
+/* FLOATING MENU ICON (YOUR VERSION) */
+.menu-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.menu-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+/* MENU */
+#side-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(26,42,58,0.95);
+    color: #E8DCC2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    transition: right 0.4s ease;
+    z-index: 999;
+}
+
+#side-menu.open {
+    right: 0;
+}
+
+#side-menu a {
+    color: #E8DCC2;
+    font-size: 2rem;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-family: "Instrument Serif", serif;
+}
+
+#side-menu a:hover {
+    color: #C49A6C;
+}
+
+#side-menu .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #E8DCC2;
+}
+
+/* HEADER */
+.amenities-header {
+    text-align: center;
+    padding: 120px 20px 50px;
+}
+
+.amenities-header h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.amenities-header p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    max-width: 650px;
+    margin: auto;
+}
+
+/* SECTION WRAPPER */
+.amenity-section {
+    max-width: 1200px;
+    margin: auto;
+    padding: 60px 20px;
+}
+
+.amenity-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* SPLIT LAYOUT / IMAGE + TEXT */
+.amenity-split {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.amenity-split img {
+    width: 500px;
+    max-width: 100%;
+    object-fit: cover;
+    box-shadow: 0 8px 20px rgba(26, 42, 58, 0.15);
+}
+
+/* TEXT BLOCK */
+.amenity-text {
+    flex: 1;
+    line-height: 1.65;
+    font-size: 1.1rem;
+}
+
+/* BULLET LISTS */
+.amenity-text ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.amenity-text li {
+    margin-bottom: 8px;
+}
+
+        /* Hiking Section Layout */
+.hiking-section {
+    padding: 60px 10%;
+    text-align: center;
+}
+
+.hiking-section h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.8rem;
+    color: #1A2A3A;
+}
+
+.hiking-subtitle {
+    font-size: 1rem;
+    color: #C49A6C;
+    margin-bottom: 40px;
+}
+
+/* Hiking Cards Grid */
+.hiking-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+/* Individual Hiking Cards */
+.hiking-card {
+    background: #FFFFFF;
+    padding: 25px;
+    border: 1px solid #E8DCC2;
+    transition: transform 0.2s ease;
+}
+
+.hiking-card:hover {
+    transform: translateY(-5px);
+}
+
+.hiking-card h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
+/* HOURS BOX */
+.hours-box {
+    background-color: #E8DCC2;
+    padding: 20px;
+    margin-top: 20px;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 15px rgba(26,42,58,0.15);
+}
+
+/* HIGHLIGHT CARDS */
+.highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.highlight-card {
+    background: #FFFFFF;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(26,42,58,0.1);
+    transition: transform 0.3s ease;
+}
+
+.highlight-card:hover {
+    transform: translateY(-5px);
+}
+
+.highlight-card h3 {
+    margin-top: 0;
+    font-size: 1.6rem;
+}
+
+.highlight-card p {
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 780px) {
+    .amenity-split {
+        flex-direction: column;
+    }
+}
+
+.amenity-split video {
+    width: 500px;
+    max-width: 100%;
+    object-fit: cover;
+    box-shadow: 0 8px 20px rgba(26, 42, 58, 0.15);
+    display: block;
+}
+
+/* Center all amenity section titles */
+.amenity-section h2,
+.section-title {
+    text-align: center;
+    width: 100%;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MENU ICON -->
+<div class="menu-icon" id="menuIcon" onclick="toggleMenu()">
+    <img src="/images/menu.png" alt="Menu">
+</div>
+
+<!-- SLIDE-IN MENU -->
+<div id="side-menu">
+    <div class="close-btn" onclick="toggleMenu()">✕</div>
+    <a href="index.html">Home</a>
+    <a href="amenities.html">Amenities</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="amenities-header">
+    <h1>Amenities</h1>
+    <p>Relax, unwind, and enjoy the elevated comforts crafted to make your stay at Last Resort Hotel unforgettable.</p>
+</header>
+
+<!-- Spa & Wellness -->
+<section class="hiking-section">
+    <h2>Spa & Wellness</h2>
+    <p class="subtitle">Relax. Restore. Rejuvenate.</p>
+
+    <div class="hiking-grid">
+        <div class="hiking-card">
+            <h3>Massage Therapies</h3>
+            <p>Choose from Swedish, deep-tissue, hot-stone, and aromatherapy massage treatments.</p>
+        </div>
+
+        <div class="hiking-card">
+            <h3>Facials</h3>
+            <p>Rehydrating botanical facials that leave your skin refreshed and glowing.</p>
+        </div>
+
+        <div class="hiking-card">
+            <h3>Body Treatments</h3>
+            <p>Full-body scrubs, exfoliation, and hydrating wraps in a soothing environment.</p>
+        </div>
+    </div>
+</section>
+
+<!-- POOL SECTION -->
+<section class="amenity-section" id="pool">
+    <h2 class="amenity-title">Heated Outdoor Pool</h2>
+
+    <div class="amenity-split">
+        <video autoplay muted loop playsinline>
+            <source src="images/amenities/pool1.mp4" type="video/mp4">
+        </video>
+
+        <div class="amenity-text">
+            <p>
+                Surrounded by natural scenery, our heated outdoor pool offers year-round comfort. 
+                Cool off, soak in the sun, or unwind in the adjacent lounge deck.
+            </p>
+
+            <div class="hours-box">
+                <strong>Pool Hours:</strong><br>
+                Daily: 7:00 AM – 10:00 PM
+            </div>
+
+            <h3>Pool Rules:</h3>
+            <ul>
+                <li>No lifeguard on duty after 8:00pm — swim at your own risk.</li>
+                <li>Children under 14 must be accompanied by an adult.</li>
+                <li>No glass containers in pool area.</li>
+                <li>Proper swim attire required.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- FITNESS CENTER -->
+<section class="amenity-section" id="fitness">
+    <h2 class="amenity-title">Fitness Center</h2>
+
+    <div class="amenity-split">
+
+        <div class="amenity-text">
+            <p>
+                Keep your routine on track with our modern fitness center, featuring everything you need for a full workout.
+            </p>
+
+            <h3>Available Equipment:</h3>
+            <ul>
+                <li>Cardio: treadmills, rowing machines, ellipticals</li>
+                <li>Free weights + bench sets</li>
+                <li>Resistance + cable machines</li>
+                <li>Yoga mats and open stretching zone</li>
+            </ul>
+
+            <div class="hours-box">
+                <strong>Open 24 Hours</strong><br>
+                Guest keycard required after 10 PM.
+            </div>
+        </div>
+
+        <video autoplay muted loop playsinline>
+            <source src="images/amenities/gym1.mp4" type="video/mp4">
+        </video>
+        
+    </div>
+</section>
+
+    <!-- HIKING SECTION -->
+<section class="hiking-section">
+    <h2>Guided Hiking Adventures</h2>
+    <p class="hiking-subtitle">Discover rugged trails, coastal overlooks, and hidden forest paths.</p>
+
+    <div class="hiking-grid">
+        <div class="hiking-card">
+            <h3>Sunrise Peak Trek</h3>
+            <p>Begin your morning with a moderate 3-mile ascent to a stunning sunrise viewpoint.</p>
+        </div>
+
+        <div class="hiking-card">
+            <h3>Forest Discovery Trail</h3>
+            <p>Perfect for beginners — explore local plants, wildlife habitats, and shaded woodland paths.</p>
+        </div>
+
+        <div class="hiking-card">
+            <h3>Expert Ridge Expedition</h3>
+            <p>A challenging, high-elevation ridge trail for seasoned hikers seeking a bold adventure.</p>
+        </div>
+    </div>
+</section>
+
+<!-- DINING + COMPLIMENTARY SERVICES -->
+<section class="amenity-section" id="extra">
+<h2 class="amenity-title"> Additional Amenities</h2>
+
+    <div class="highlight-grid">
+
+        <div class="highlight-card">
+            <h3>Dining</h3>
+            <p>
+                Enjoy regional flavors and seasonal menus at our on-site restaurant, 
+                plus handcrafted cocktails at the fireside lounge.
+            </p>
+        </div>
+
+        <div class="highlight-card">
+            <h3>Complimentary Breakfast</h3>
+            <p>
+                Fresh pastries, fruit, eggs, coffee, and rotating specials served daily.
+            </p>
+        </div>
+
+        <div class="highlight-card">
+            <h3>High-Speed WiFi</h3>
+            <p>
+                Secure connectivity available throughout the property at no charge.
+            </p>
+        </div>
+
+        <div class="highlight-card">
+            <h3>Shuttle Service</h3>
+            <p>
+                Complimentary transportation to nearby attractions and trailheads.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- JAVASCRIPT-->
+<script>
+// Toggle Slide Menu
+function toggleMenu() {
+    const menu = document.getElementById("side-menu");
+    const icon = document.getElementById("menuIcon");
+
+    menu.classList.toggle("open");
+    icon.style.opacity = menu.classList.contains("open") ? "0" : "1";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+        body {
+            margin: 0;
+            background-color: #FAFAF7;
+            color: #1A2A3A;
+            font-family: "Inter", sans-serif;
+        }
+
+        h1, h2 {
+            font-family: "Instrument Serif", serif;
+        }
+
+        /* MENU */
+        .menu-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .menu-icon img {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* MENU */
+        #side-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(26,42,58,0.95);
+            color: #E8DCC2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            transition: right 0.4s ease;
+            z-index: 999;
+        }
+
+        #side-menu.open {
+            right: 0;
+        }
+
+        #side-menu a {
+            color: #E8DCC2;
+            font-size: 2rem;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-family: "Instrument Serif", serif;
+        }
+
+        #side-menu a:hover {
+            color: #C49A6C;
+        }
+
+        #side-menu .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #E8DCC2;
+        }
+
+        /* HEADER */
+        .about-header {
+            text-align: center;
+            padding: 120px 20px 50px;
+        }
+
+        .about-header h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+
+        .about-header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-family: 'Instrument Serif', serif;
+            margin-bottom: 20px;
+            color: #1A2A3A;
+            text-align: center;
+        }
+
+        .section {
+            padding: 60px 10%;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #C49A6C;
+            margin-bottom: 40px;
+        }
+
+                .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #FFFFFF;
+            padding: 25px;
+            border: 1px solid #E8DCC2;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .team-photo {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #E8DCC2;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: #1A2A3A;
+            color: #E8DCC2;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating menu icon -->
+    <div class="menu-icon" id="menuIcon" onclick="toggleMenu(true)">
+        <img src="/images/menu.png" alt="Menu">
+    </div>
+
+    <!-- Full-screen menu -->
+    <div id="side-menu">
+        <div class="close-btn" onclick="toggleMenu(false)">✕</div>
+        <a href="index.html">Home</a>
+        <a href="amenities.html">Amenities</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Make a Reservation</a>
+    </div>
+    <header class="about-header">
+    <h1>Our Story</h1>
+    <p class="subtitle">A beachside escape designed for restoration and adventure.</p>
+</header>
+
+    <div class="card" style="max-width:800px; margin:auto; text-align:left; line-height:1.8;">
+        <p>
+            Founded on a quiet stretch of sun-warmed coastline, The Last Resort Hotel began as a humble beach retreat where travelers could reconnect with the sound of the ocean and the beauty of untouched shoreline. Over time, it has grown into a full-service coastal sanctuary known for relaxed luxury, natural elegance, and unforgettable sunsets.
+        </p>
+        <p>
+            Whether guests come to explore the coast, unwind in the warm sand, or savor fresh ocean-inspired dining, the resort remains committed to blending comfort, nature, and timeless hospitality.
+        </p>
+    </div>
+
+    <!-- TEAM -->
+    <section class="section">
+        <h2 class="section-title">Meet the Team</h2>
+        <p class="subtitle">The people who bring our resort to life.</p>
+
+        <div class="grid">
+            <div class="card">
+                <img src="https://via.placeholder.com/150" class="team-photo">
+                <h3>Atlas Robinson</h3>
+                <p><strong>Website Specialist</strong></p>
+                <p>Atlas is a 4th year student, studying Psychology with a concentration in Cognitive Neuroscience and a minor in Web Applications and Programming.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://via.placeholder.com/150" class="team-photo">
+                <h3>Avril Luo</h3>
+                <p><strong>Integration Manager</strong></p>
+                <p>Marcus brings ocean-inspired treatments and wellness programs to the heart of the resort.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://via.placeholder.com/150" class="team-photo">
+                <h3>Yanxi Chen</h3>
+                <p><strong>Database Specialist</strong></p>
+                <p>Chef Sophia crafts coastal cuisine using local seafood and seasonal ingredients.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://via.placeholder.com/150" class="team-photo">
+                <h3>Katie Carlson</h3>
+                <p><strong>Website Specialist</strong></p>
+                <p>Arlo curates beachside adventures, water activities, and personalized guest experiences.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MISSION -->
+    <section class="section">
+        <h2 class="section-title">Our Mission</h2>
+        <p class="subtitle">Guided by nature. Inspired by the coast.</p>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Coastal Serenity</h3>
+                <p>A peaceful environment designed to restore, relax, and recharge.</p>
+            </div>
+
+            <div class="card">
+                <h3>Environmental Care</h3>
+                <p>We protect our shoreline and marine life through sustainable practices.</p>
+            </div>
+
+            <div class="card">
+                <h3>Authentic Hospitality</h3>
+                <p>Warm, genuine service that makes every guest feel at home.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 The Last Resort Hotel</p>
+    </footer>
+
+
+<script>
+    function toggleMenu(open) {
+        const menu = document.getElementById('side-menu');
+        const icon = document.getElementById('menuIcon');
+        if(open) {
+            menu.classList.add('open');
+            icon.style.display = 'none';
+        } else {
+            menu.classList.remove('open');
+            icon.style.display = 'block';
+        }
+    }
+</script>
+</body>
+</html>
