@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Last Resort Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="res-styles.css">
+</head>
+<body>
+
+  <h1 class="title">Last Resort Portal</h1>
+  <!-- Floating menu icon -->
+<div class="menu-icon" id="menuIcon" onclick="toggleMenu(true)">
+    <img src="/images/menu.png" alt="Menu">
+</div>
+
+<!-- Full-screen menu -->
+<div id="side-menu">
+    <div class="close-btn" onclick="toggleMenu(false)">✕</div>
+    <a href="index.html">Home</a>
+    <a href="amenities.html">Amenities</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="about.html">About</a>
+    <a href="login.html">Make a Reservation</a>
+</div>
+
+  <div class="portal-container">
+
+    <!-- TOGGLE -->
+    <div class="toggle">
+      <button id="customerTab" class="active">Customer Login</button>
+      <button id="employeeTab">Employee Login</button>
+    </div>
+
+    <!-- CUSTOMER FORM -->
+    <div id="customerForm" class="form-box active-form">
+      <h2>Customer Portal</h2>
+      <p class="subtitle">Access your reservations and account</p>
+
+      <label>Email</label>
+      <input type="email" placeholder="Enter your email">
+
+      <label>Password</label>
+      <input type="password" placeholder="Enter your password">
+
+      <div class="links">
+        <a href="#">Forgot password?</a>
+        <a href="#">Create account</a>
+      </div>
+
+      <button class="signin-btn">Sign In</button>
+    </div>
+
+    <!-- EMPLOYEE FORM -->
+    <div id="employeeForm" class="form-box">
+      <h2>Employee Portal</h2>
+      <p class="subtitle">Staff and management access</p>
+
+      <label>Employee ID</label>
+      <input type="text" placeholder="Enter your employee ID">
+
+      <label>Password</label>
+      <input type="password" placeholder="Enter your password">
+
+      <label>Property Location</label>
+      <input type="text" placeholder="Property code">
+
+      <a class="forgot" href="#">Forgot password?</a>
+      <br><br>
+      <button class="signin-btn">Sign In</button>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="copyright">© 2025 Last Resort Hotels. All rights reserved.</p>
+  </footer>
+
+  <script src="res-script.js"></script>
+</body>
+</html>
