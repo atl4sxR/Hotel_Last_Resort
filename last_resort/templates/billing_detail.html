@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Billing Account #{{ account.billing_account_id }}</h1>
+<p>
+  Party ID: {{ account.party_id }}  
+  <br>
+  Party Type: {{ account.party_type }}
+</p>
+
+<h2>Charges</h2>
+
+{% if charges|length == 0 %}
+<p>No charges for this account.</p>
+{% else %}
+
+<table class="data-table">
+<thead>
+    <tr>
+        <th>Charge ID</th>
+        <th>Total Amount</th>
+        <th>Allocated Amount</th>
+        <th>Percent</th>
+        <th>Posted At</th>
+        <th>Related To</th>
+    </tr>
+</thead>
+
+<tbody>
+{% for c in charges %}
+<tr>
+    <td>{{ c.charge_id }}</td>
+    <td>${{ "%.2f"|format(c.total_amount) }}</td>
+    <td>${{ "%.2f"|format(c.allocated_amount) }}</td>
+    <td>{{ c.responsible_percent }}%</td>
+    <td>{{ c.posted_at }}</td>
+    <td>
+        {% if c.reservation_id %}
+            Reservation #{{ c.reservation_id }}
+        {% elif c.service_usage_id %}
+            Service Usage #{{ c.service_usage_id }}
+        {% elif c.facility_id %}
+            Facility Fee #{{ c.facility_id }}
+        {% else %}
+            General Charge
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endif %}
+
+{% endblock %}

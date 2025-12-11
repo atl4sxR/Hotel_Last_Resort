@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>My Events</h1>
+
+{% if events|length == 0 %}
+<p>You have no events.</p>
+{% else %}
+
+<table class="data-table">
+<thead>
+    <tr>
+        <th>Name</th>
+        <th>Duration</th>
+        <th>Attendance</th>
+        <th>Guest Count</th>
+        <th>Facility</th>
+    </tr>
+</thead>
+
+<tbody>
+{% for ev in events %}
+<tr>
+    <td>{{ ev.event_name }}</td>
+    <td>{{ ev.event_duration }}</td>
+    <td>{{ ev.est_attendance }}</td>
+    <td>{{ ev.est_guest_count }}</td>
+    <td>{{ ev.facility_id or "Not Assigned" }}</td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+{% endif %}
+
+{% endblock %}

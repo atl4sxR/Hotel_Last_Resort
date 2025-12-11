@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if view == "customer" %}
+    <h1>My Reservations</h1>
+    <p>Here are your reservation requests and their current status.</p>
+
+    <a class="btn" href="{{ url_for('new_reservation') }}">+ New Reservation Request</a>
+
+    {% if reservations %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Dates</th>
+            <th>Guests</th>
+            <th>Status</th>
+            <th>Room</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in reservations %}
+          <tr>
+            <td>#{{ r.id }}</td>
+            <td>{{ r.start_date }} → {{ r.end_date }}</td>
+            <td>{{ r.num_guests }}</td>
+            <td>{{ r.status|capitalize }}</td>
+            <td>{{ r.room_number or "-" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>You have no reservations yet.</p>
+    {% endif %}
+
+  {% elif view == "staff" %}
+    <h1>All Reservations</h1>
+    <p>Employees can review guest requests and confirm them.</p>
+
+    <h2>Pending Requests</h2>
+    {% if pending %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Dates</th>
+            <th>Guests</th>
+            <th>Created</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in pending %}
+          <tr>
+            <td>#{{ r.id }}</td>
+            <td>{{ r.customer_name }}</td>
+            <td>{{ r.start_date }} → {{ r.end_date }}</td>
+            <td>{{ r.num_guests }}</td>
+            <td>{{ r.created_at }}</td>
+            <td>
+              <a class="btn" href="{{ url_for('confirm_reservation', res_id=r.id) }}">
+                Confirm
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No pending requests.</p>
+    {% endif %}
+
+    <h2 style="margin-top:24px;">Confirmed Reservations</h2>
+    {% if confirmed %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Dates</th>
+            <th>Guests</th>
+            <th>Room</th>
+            <th>Confirmed At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in confirmed %}
+          <tr>
+            <td>#{{ r.id }}</td>
+            <td>{{ r.customer_name }}</td>
+            <td>{{ r.start_date }} → {{ r.end_date }}</td>
+            <td>{{ r.num_guests }}</td>
+            <td>{{ r.room_number or "-" }}</td>
+            <td>{{ r.created_at }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No confirmed reservations yet.</p>
+    {% endif %}
+  {% endif %}
+{% endblock %}

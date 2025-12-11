@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Pending Reservation Requests</h1>
+
+{% if requests|length == 0 %}
+    <p>No pending reservation requests 🎉</p>
+{% else %}
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Reservation ID</th>
+            <th>Stay Dates</th>
+            <th>Guests</th>
+            <th>Status</th>
+            <th>Assign</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for r in requests %}
+        <tr>
+            <td>#{{ r.reservation_id }}</td>
+
+            <td>
+                {{ r.start_date }} → {{ r.end_date }}
+            </td>
+
+            <td>{{ r.num_guest }}</td>
+
+            <td>
+                <span class="tag tag-pending">Pending</span>
+            </td>
+
+            <td>
+                <a class="btn-small" href="{{ url_for('reservation_assign', res_id=r.reservation_id) }}">
+                    Assign →
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+
+{% endblock %}

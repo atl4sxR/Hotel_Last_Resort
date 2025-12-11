@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if view == "customer" %}
+    <h1>My Events</h1>
+    <p>Here are the events you have requested as host.</p>
+
+    <a class="btn" href="{{ url_for('new_event') }}">+ New Event Request</a>
+
+    {% if events %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Guests</th>
+            <th>Status</th>
+            <th>Facility</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in events %}
+          <tr>
+            <td>{{ e.title }}</td>
+            <td>{{ e.event_date }}</td>
+            <td>{{ e.start_time }}–{{ e.end_time }}</td>
+            <td>{{ e.est_attendance or "-" }}</td>
+            <td>{{ e.status|capitalize }}</td>
+            <td>{{ e.facility_name or "-" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>You have not requested any events yet.</p>
+    {% endif %}
+
+  {% elif view == "staff" %}
+    <h1>All Events</h1>
+    <p>Employees can review pending event requests and assign facilities.</p>
+
+    <h2>Pending Event Requests</h2>
+    {% if pending %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Host</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Guests</th>
+            <th>Facility</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in pending %}
+          <tr>
+            <td>#{{ e.id }}</td>
+            <td>{{ e.title }}</td>
+            <td>{{ e.host_name }}</td>
+            <td>{{ e.event_date }}</td>
+            <td>{{ e.start_time }}–{{ e.end_time }}</td>
+            <td>{{ e.est_attendance or "-" }}</td>
+            <td>{{ e.facility_name or "TBD" }}</td>
+            <td>
+              <a class="btn" href="{{ url_for('confirm_event', event_id=e.id) }}">Assign Facility / Confirm</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No pending event requests.</p>
+    {% endif %}
+
+    <h2 style="margin-top: 24px;">Confirmed Events</h2>
+    {% if confirmed %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Host</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Guests</th>
+            <th>Facility</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in confirmed %}
+          <tr>
+            <td>#{{ e.id }}</td>
+            <td>{{ e.title }}</td>
+            <td>{{ e.host_name }}</td>
+            <td>{{ e.event_date }}</td>
+            <td>{{ e.start_time }}–{{ e.end_time }}</td>
+            <td>{{ e.est_attendance or "-" }}</td>
+            <td>{{ e.facility_name or "-" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No confirmed events yet.</p>
+    {% endif %}
+  {% endif %}
+{% endblock %}

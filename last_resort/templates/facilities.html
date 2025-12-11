@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Facilities</h1>
+<p>This page lists available meeting rooms and facilities that can be used for events.</p>
+
+{% if facilities %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Location</th>
+        <th>Capacity</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for f in facilities %}
+      <tr>
+        <td>{{ f.name }}</td>
+        <td>{{ f.type or "-" }}</td>
+        <td>{{ f.location or "-" }}</td>
+        <td>{{ f.capacity or "-" }}</td>
+        <td>{{ f.status or "-" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No facilities defined yet.</p>
+{% endif %}
+{% endblock %}

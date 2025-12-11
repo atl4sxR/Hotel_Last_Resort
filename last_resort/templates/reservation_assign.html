@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Assign Room</h1>
+
+<div class="assign-grid">
+
+    <!-- Reservation Info -->
+    <div class="assign-card">
+        <h2>Reservation #{{ req.reservation_id }}</h2>
+
+        <p><strong>Party ID:</strong> {{ req.party_id }}</p>
+        <p><strong>Stay:</strong> {{ req.start_date }} → {{ req.end_date }}</p>
+        <p><strong>Guests:</strong> {{ req.num_guest }}</p>
+        <p><strong>Status:</strong> 
+            <span class="tag tag-pending">Pending</span>
+        </p>
+
+        <p style="margin-top:14px;">
+            Please select a room from the list on the right.
+        </p>
+    </div>
+
+
+    <!-- Available Rooms List -->
+    <div class="rooms-list">
+        <h2>Available Rooms</h2>
+
+        {% if rooms|length == 0 %}
+            <p>No rooms available 😢</p>
+        {% else %}
+
+        <div class="room-cards">
+            {% for r in rooms %}
+            <div class="room-card">
+                <div class="room-head">
+                    <strong>Room {{ r.room_number }}</strong>
+                </div>
+                <p>{{ r.room_type }}</p>
+
+                <form method="POST">
+                    <input type="hidden" name="room_id" value="{{ r.room_id }}">
+                    <button class="btn-assign">Assign This Room →</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

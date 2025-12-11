@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Event Management</h1>
+
+<section class="card">
+  <h2>All Events</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Host</th>
+        <th>Billing</th>
+        <th>Attendance</th>
+        <th>Duration</th>
+        <th>Guests</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for e in events %}
+      <tr>
+        <td>{{ e.event_id }}</td>
+        <td>{{ e.event_name }}</td>
+
+        <td>
+          {% if e.party_type == 'Customer' %}
+            {{ e.first_name }} {{ e.last_name }}
+          {% else %}
+            {{ e.organization_name }}
+          {% endif %}
+        </td>
+
+        <td>{{ e.billing_status }}</td>
+
+        <td>{{ e.est_attendance }}</td>
+        <td>{{ e.event_duration }} hr</td>
+        <td>{{ e.est_guest_count }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+
+<section class="card">
+  <h2>Occupied Today</h2>
+
+  <h3>Rooms</h3>
+  <p>
+  {% if occupied_rooms %}
+    {% for rid in occupied_rooms %}
+      <span class="tag tag-busy">Room {{ rid }}</span>
+    {% endfor %}
+  {% else %}
+    <span class="muted">No rooms occupied today</span>
+  {% endif %}
+  </p>
+
+  <h3>Facilities</h3>
+  <p>
+  {% if occupied_facilities %}
+    {% for fid in occupied_facilities %}
+      <span class="tag tag-busy">Facility {{ fid }}</span>
+    {% endfor %}
+  {% else %}
+    <span class="muted">No facilities occupied today</span>
+  {% endif %}
+  </p>
+</section>
+
+
+<section class="card">
+  <h2>Available Today</h2>
+
+  <h3>Rooms</h3>
+  <p>
+    {% for r in available_rooms %}
+      <span class="tag tag-ok">Room {{ r.room_number }}</span>
+    {% endfor %}
+  </p>
+
+  <h3>Facilities</h3>
+  <p>
+    {% for f in available_facilities %}
+      <span class="tag tag-ok">Facility {{ f.facility_id }}</span>
+    {% endfor %}
+  </p>
+</section>
+
+{% endblock %}

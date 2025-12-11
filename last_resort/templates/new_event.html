@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>New Event Request</h1>
+<p>Submit a request to host an event. An event manager will review and assign a facility.</p>
+
+<form method="POST" class="form">
+  <div class="form-row">
+    <label for="title">Event Title</label>
+    <input type="text" id="title" name="title" required>
+  </div>
+
+  <div class="form-row">
+    <label for="host_name">Host Name</label>
+    <input type="text" id="host_name" name="host_name" required>
+  </div>
+
+  <div class="form-row">
+    <label for="event_date">Event Date</label>
+    <input type="date" id="event_date" name="event_date" required>
+  </div>
+
+  <div class="form-row">
+    <label for="start_time">Start Time</label>
+    <input type="time" id="start_time" name="start_time" required>
+  </div>
+
+  <div class="form-row">
+    <label for="end_time">End Time</label>
+    <input type="time" id="end_time" name="end_time" required>
+  </div>
+
+  <div class="form-row">
+    <label for="est_attendance">Estimated Attendance</label>
+    <input type="number" id="est_attendance" name="est_attendance" min="1">
+  </div>
+
+  <button class="btn" type="submit">Submit Event Request</button>
+</form>
+{% endblock %}

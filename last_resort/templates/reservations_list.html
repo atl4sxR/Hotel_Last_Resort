@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>My Reservations</h1>
+
+{% if reservations|length == 0 %}
+    <p>You currently have no reservations.</p>
+{% else %}
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Reservation ID</th>
+            <th>Stay Dates</th>
+            <th>Guests</th>
+            <th>Status</th>
+            <th>Assigned Room</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for r in reservations %}
+        <tr>
+            <td>{{ r.reservation_id }}</td>
+
+            <td>
+                {{ r.start_date }} → {{ r.end_date }}
+            </td>
+
+            <td>{{ r.num_guest }}</td>
+
+            <td>
+                {% if r.status == "Confirmed" or r.status == "Checked In" %}
+                    <span class="tag tag-confirmed">{{ r.status }}</span>
+                {% elif r.status == "Future" %}
+                    <span class="tag tag-pending">Pending</span>
+                {% else %}
+                    {{ r.status }}
+                {% endif %}
+            </td>
+
+            <td>
+                {% if r.room_number %}
+                    Room {{ r.room_number }}
+                {% else %}
+                    <span class="muted">Not Assigned Yet</span>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+
+{% endblock %}

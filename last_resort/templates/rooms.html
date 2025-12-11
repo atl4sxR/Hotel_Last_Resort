@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Rooms</h1>
+
+<!-- Sorting options (employee only) -->
+{% if role == "employee" %}
+<div style="margin-bottom: 15px;">
+    <strong>Sort by:</strong>
+    <a href="{{ url_for('rooms_list', sort='price') }}">Price</a> |
+    <a href="{{ url_for('rooms_list', sort='status') }}">Status</a> |
+    <a href="{{ url_for('rooms_list', sort='capacity') }}">Capacity</a> |
+    <a href="{{ url_for('rooms_list', sort='type') }}">Room Type</a>
+</div>
+{% endif %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Room #</th>
+            <th>Type</th>
+            <th>Floor</th>
+            <th>Smoking</th>
+            <th>Status</th>
+            <th>Rate</th>
+            <th>Capacity</th>
+            <th>Building</th>
+            <th>Wing</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for r in rooms %}
+        <tr>
+            <td>{{ r.room_id }}</td>
+            <td>{{ r.room_number }}</td>
+            <td>{{ r.room_type }}</td>
+            <td>{{ r.floor }}</td>
+            <td>{{ "Yes" if r.is_smoking else "No" }}</td>
+            <td>{{ r.status }}</td>
+            <td>${{ "%.2f"|format(r.base_rate) }}</td>
+            <td>{{ r.capacity }}</td>
+            <td>{{ r.building_name }}</td>
+            <td>{{ r.wing_name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Login (Demo Mode)</h1>
+<p>Select a role to continue:</p>
+<form method="POST">
+  <button name="user" value="guest">Login as Guest</button>
+  <button name="user" value="employee">Login as Employee</button>
+</form>
+
+
+{% endblock %}

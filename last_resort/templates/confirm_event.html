@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Confirm Event #{{ event.id }}</h1>
+
+<p>
+  <strong>{{ event.title }}</strong><br>
+  Host: {{ event.host_name }}<br>
+  Date: {{ event.event_date }}<br>
+  Time: {{ event.start_time }}–{{ event.end_time }}<br>
+  Estimated attendance: {{ event.est_attendance or "-" }}
+</p>
+
+<form method="POST" class="form">
+  <div class="form-row">
+    <label for="facility_id">Assign Facility</label>
+    <select id="facility_id" name="facility_id" required>
+      <option value="">-- Select a facility --</option>
+      {% for f in facilities %}
+        <option value="{{ f.id }}">
+          {{ f.name }} ({{ f.type or "Facility" }}, cap: {{ f.capacity or "?" }})
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <button class="btn" type="submit">Confirm Event</button>
+</form>
+{% endblock %}

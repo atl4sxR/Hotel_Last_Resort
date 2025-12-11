@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>All Billing Accounts</h1>
+
+<table class="data-table">
+<thead>
+    <tr>
+        <th>Account ID</th>
+        <th>Party ID</th>
+        <th>Party Type</th>
+        <th>Total Charges (USD)</th>
+        <th>View</th>
+    </tr>
+</thead>
+
+<tbody>
+{% for acc in accounts %}
+<tr>
+    <td>{{ acc.billing_account_id }}</td>
+    <td>{{ acc.party_id }}</td>
+    <td>{{ acc.party_type }}</td>
+    <td>${{ "%.2f"|format(acc.total_charges) }}</td>
+    <td><a class="btn-small" href="{{ url_for('billing_detail', acc_id=acc.billing_account_id) }}">Open →</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

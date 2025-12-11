@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Last Resort Hotels · Demo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="logo">Last Resort Hotels</div>
+
+  <nav class="navbar">
+
+    <!-- Always visible -->
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('rooms_list') }}">Rooms</a>
+
+    {% set role = session.get('role') %}
+
+    <!-- Customer Navigation -->
+    {% if role == 'customer' %}
+        <a href="{{ url_for('reservations_list') }}">My Reservations</a>
+        <a href="{{ url_for('events_my') }}">My Events</a>
+        <a href="{{ url_for('billing_my') }}">My Billing</a>
+
+    <!-- Employee Navigation -->
+    {% elif role == 'employee' %}
+        <a href="{{ url_for('reservations_pending') }}">Reservations</a>
+        <a href="{{ url_for('events_all') }}">Events</a>
+        <a href="{{ url_for('billing_all') }}">Billing</a>
+    {% endif %}
+
+    <!-- Auth control -->
+    {% if role %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+    {% endif %}
+  </nav>
+</header>
+
+<!-- Identity Bar -->
+{% if session.get('role') %}
+<div class="identity-bar">
+    Logged in as 
+    <strong>{{ session.get('name', 'Demo User') }}</strong>
+    ({{ session.get('role') }})
+</div>
+{% endif %}
+
+<main class="container">
+  {% block content %}
+  {% endblock %}
+</main>
+
+<footer class="footer">
+  © 2025 Last Resort Hotels — Demo System
+</footer>
+
+</body>
+</html>

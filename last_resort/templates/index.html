@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Last Resort Hotels · Management Portal</h1>
+
+<!-- ===== Welcome Section ===== -->
+{% set role = session.get("role") %}
+{% set name = session.get("name", "Guest") %}
+
+{% if role == "customer" %}
+    <p>Welcome, <strong>{{ name }}</strong>!  
+       You can submit reservation and event requests, and review your confirmed bookings.
+    </p>
+
+{% elif role == "employee" %}
+    <p>Welcome, <strong>Employee {{ name }}</strong>!  
+       You can manage reservations, room assignments, events, and billing.
+    </p>
+
+{% else %}
+    <p>Welcome! Please log in to explore hotel management functions.</p>
+{% endif %}
+
+
+<!-- ===== Dashboard Grid ===== -->
+<div class="card-grid">
+
+  <!-- Rooms -->
+  <div class="card">
+    <h2>Rooms</h2>
+    <p>Browse hotel rooms, availability, wing, and building information.</p>
+    <a class="btn" href="{{ url_for('rooms_list') }}">View Rooms →</a>
+  </div>
+
+
+  <!-- Reservations -->
+  <div class="card">
+    <h2>Reservations</h2>
+
+    {% if role == "customer" %}
+        <p>Submit reservation requests or review your confirmed stays.</p>
+        <a class="btn" href="{{ url_for('reservations_new') }}">+ New Reservation</a>
+        <a class="btn" href="{{ url_for('reservations_list') }}">My Reservations →</a>
+
+    {% elif role == "employee" %}
+        <p>Manage pending requests, confirm bookings, and assign rooms.</p>
+        <a class="btn" href="{{ url_for('reservations_pending') }}">Manage Reservations →</a>
+
+    {% else %}
+        <p>Please log in to request or manage reservations.</p>
+        <a class="btn" href="{{ url_for('login') }}">Login →</a>
+    {% endif %}
+  </div>
+
+
+  <!-- Events -->
+  <div class="card">
+    <h2>Events & Facilities</h2>
+
+    {% if role == "customer" %}
+        <p>Submit event space requests and track their approval status.</p>
+        <a class="btn" href="{{ url_for('events_my') }}">My Events →</a>
+
+    {% elif role == "employee" %}
+        <p>Review event requests, assign spaces, and manage daily schedules.</p>
+        <a class="btn" href="{{ url_for('events_all') }}">Manage Events →</a>
+
+
+    {% else %}
+        <p>Please log in to request or manage events.</p>
+        <a class="btn" href="{{ url_for('login') }}">Login →</a>
+    {% endif %}
+  </div>
+
+
+  <!-- Billing -->
+  <div class="card">
+    <h2>Billing</h2>
+
+    {% if role == "customer" %}
+        <p>View your billing account, balances, and all charges.</p>
+        <a class="btn" href="{{ url_for('billing_my') }}">My Billing →</a>
+
+    {% elif role == "employee" %}
+        <p>Review all accounts and add charges for reservations or events.</p>
+        <a class="btn" href="{{ url_for('billing_all') }}">Manage Billing →</a>
+
+    {% else %}
+        <p>Please log in to view or manage billing information.</p>
+        <a class="btn" href="{{ url_for('login') }}">Login →</a>
+    {% endif %}
+  </div>
+
+</div>
+
+{% endblock %}
